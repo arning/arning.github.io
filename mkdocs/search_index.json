@@ -1,0 +1,294 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Welcome to MkDocs\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.",
+            "title": "Home"
+        },
+        {
+            "location": "/#welcome-to-mkdocs",
+            "text": "For full documentation visit  mkdocs.org .",
+            "title": "Welcome to MkDocs"
+        },
+        {
+            "location": "/#commands",
+            "text": "mkdocs new [dir-name]  - Create a new project.  mkdocs serve  - Start the live-reloading docs server.  mkdocs build  - Build the documentation site.  mkdocs help  - Print this help message.",
+            "title": "Commands"
+        },
+        {
+            "location": "/#project-layout",
+            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.",
+            "title": "Project layout"
+        },
+        {
+            "location": "/about/",
+            "text": "About",
+            "title": "About"
+        },
+        {
+            "location": "/about/#about",
+            "text": "",
+            "title": "About"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/",
+            "text": "Blender command line rendering\n\n\nWarning: Still under construction\n\n\nBlender offers the possibility to render images or animations from the command line without UI.\nThis saves memory and reduces the render time a bit.\nHowever, I think the most useful application is, if it is required to render multiple files as a batch process.\n\n\nSyntax\n\n\nblender [-b \ndir\nfile\n [-o \ndir\nfile\n][-F \nformat\n][-f \nframe\n][-s \nframe\n -e \nframe\n -a]]\n\n\n\nRender options\n\n\n-b or --background \nfile\n\n      Load \nfile\n in background (often used for UI-less rendering)\n\n-a or --render-anim \n      Render frames from start to end (inclusive)\n\n-f or --render-frame \nframe\n\n      Render frame \nframe\n and save it.\n      +\nframe\n start frame relative, -\nframe\n end frame relative.\n\n-s or --frame-start \nframe\n\n      Set start to frame \nframe\n (use before the -a argument)\n\n-e or --frame-end \nframe\n\n      Set end to frame \nframe\n (use before the -a argument)\n\n-o or --render-output \npath\n\n      Set the render path and file name.\n      Use // at the start of the path to\n      render relative to the blend file.\n      The # characters are replaced by the frame number, and used to define zero padding.\n       ani_##_test.png becomes ani_01_test.png\n       test-######.png becomes test-000001.png\n      When the filename does not contain #, The suffix #### is added to the filename\n      The frame number will be added at the end of the filename.\n      eg: blender -b foobar.blend -o //render_ -F PNG -x 1 -a\n      //render_ becomes //render_####, writing frames as //render_0001.png//\n\n-x or --use-extension \nbool\n\n      Set option to add the file extension to the end of the file\n\n\n\nNote:\n- The option -b or --background should be always set. We don't need the UI!\n- The last argument has to be either -f (for still image) or -a (for an animation).\n\n\nExamples\n\n\nIt is easiest to set all render parameters in Blender (with UI), then you don't need to think about the format or the render engine.\nThere are actually much more options available than mentioned here. However, they are for more special usages that are not covered here.\nCheck the \nBlender documentation\n for further information.\n\n\nWe are keepin' it fairly simple, then everything is quite straightforward.\n\n\nStill images (single frames)\n\n\n    blender -b example/example.blend  -o //rendered_files -x 1 -f 1\n\n\n\nThat means Blender in command line mode (-b) shall render the file example.blend, save the output in rendered_files (-o), the file extension should be added (-x), and frame No. 1 should be rendered (-f).\n\n\nAnimations\n\n\n    blender -b example/example.blend  -s 20 -e 100 -a\n\n\n\nThat means Blender in command line mode (-b) shall render the file example.blend, start the rendering at frame 20 (-s) until frame 100 (-e) as an animation (-a). All other render settings like format, render engine, etc are done in the way like defined in the .blend file.\n\n\nBatch rendering\n\n\nAs I said in the introduction this is in my opinion the most useful application of the command line rendering of blender, at least for the general use of Blender.\nThere are several ways to implement it.\n\n\nDirectly from the command line\n\n\nWindows (DOS)\n\n\nIn the Windows command prompt you can combine commands by '\n'.\n   See this example:\n\n\nblender -b example\\example1.blend  -s 20 -e 100 -a \n blender -b example\\example2.blend  -s 20 -e 100 -a\n\n\n\nIf you are rendering overnight or over the weekend, it is rekommendable to include a command to shutdown the PC automatically.\n   The command would then look like this:\n\n\n    blender -b example\\example1.blend  -s 20 -e 100 -a \n blender -b example\\example2.blend  -s 20 -e 100 -a \n shutdown /s /t 0\n\n\n\nUnix (shell)\n\n\nThe Blender commands are identical on Unix (Linux,MAC OS X, etc) and Windows systems. However, there some pecularities for each OS, e.g. Windows uses the \\ character as the path separator and UNIX the / character.\n   The only important difference is the shutdown command. The syntax is different and you need superuser rights to execute that command.\n   In short it looks like this:\n\n\n    blender -b example/example1.blend  -s 20 -e 100 -a \n blender -b example/example2.blend  -s 20 -e 100 -a \n sudo shutdown -h now\n\n\n\nBatch file or shell script\n\n\nWindows (DOS)\n\n\nSimply create a new file in you favorite text editor and copy and paste each command line seperately in a new line. \nSomthing like this:\n\n\nblender -b example\\example1.blend  -s 20 -e 100 -a \nblender -b example\\example2.blend  -s 20 -e 100 -a\nshutdown /s /t 0\n\n\n\nNote: Omit '\n'.\n\n\nThen save the file and name the file extention .bat, and execute file. \n\n\nUnix (bash)\n\n\nBearing in mind the small differences between UNIX and DOS it is practically the same.\nHere an example.\n\n\n#!/bin/bash\nblender -b example/example1.blend  -s 20 -e 100 -a \nblender -b example/example2.blend  -s 20 -e 100 -a\nshutdown -h now\n\n\n\nNote: Omit '\n'.\n\n\nThen save the file and name the file extention .sh, and execute file.\n\n\nNote: In order to make the shutdown work, you have to execute the script with super user rights.",
+            "title": "Command line rendering"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#blender-command-line-rendering",
+            "text": "Warning: Still under construction  Blender offers the possibility to render images or animations from the command line without UI.\nThis saves memory and reduces the render time a bit.\nHowever, I think the most useful application is, if it is required to render multiple files as a batch process.",
+            "title": "Blender command line rendering"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#syntax",
+            "text": "blender [-b  dir file  [-o  dir file ][-F  format ][-f  frame ][-s  frame  -e  frame  -a]]",
+            "title": "Syntax"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#render-options",
+            "text": "-b or --background  file \n      Load  file  in background (often used for UI-less rendering)\n\n-a or --render-anim \n      Render frames from start to end (inclusive)\n\n-f or --render-frame  frame \n      Render frame  frame  and save it.\n      + frame  start frame relative, - frame  end frame relative.\n\n-s or --frame-start  frame \n      Set start to frame  frame  (use before the -a argument)\n\n-e or --frame-end  frame \n      Set end to frame  frame  (use before the -a argument)\n\n-o or --render-output  path \n      Set the render path and file name.\n      Use // at the start of the path to\n      render relative to the blend file.\n      The # characters are replaced by the frame number, and used to define zero padding.\n       ani_##_test.png becomes ani_01_test.png\n       test-######.png becomes test-000001.png\n      When the filename does not contain #, The suffix #### is added to the filename\n      The frame number will be added at the end of the filename.\n      eg: blender -b foobar.blend -o //render_ -F PNG -x 1 -a\n      //render_ becomes //render_####, writing frames as //render_0001.png//\n\n-x or --use-extension  bool \n      Set option to add the file extension to the end of the file  Note:\n- The option -b or --background should be always set. We don't need the UI!\n- The last argument has to be either -f (for still image) or -a (for an animation).",
+            "title": "Render options"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#examples",
+            "text": "It is easiest to set all render parameters in Blender (with UI), then you don't need to think about the format or the render engine.\nThere are actually much more options available than mentioned here. However, they are for more special usages that are not covered here.\nCheck the  Blender documentation  for further information.  We are keepin' it fairly simple, then everything is quite straightforward.",
+            "title": "Examples"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#still-images-single-frames",
+            "text": "blender -b example/example.blend  -o //rendered_files -x 1 -f 1  That means Blender in command line mode (-b) shall render the file example.blend, save the output in rendered_files (-o), the file extension should be added (-x), and frame No. 1 should be rendered (-f).",
+            "title": "Still images (single frames)"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#animations",
+            "text": "blender -b example/example.blend  -s 20 -e 100 -a  That means Blender in command line mode (-b) shall render the file example.blend, start the rendering at frame 20 (-s) until frame 100 (-e) as an animation (-a). All other render settings like format, render engine, etc are done in the way like defined in the .blend file.",
+            "title": "Animations"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#batch-rendering",
+            "text": "As I said in the introduction this is in my opinion the most useful application of the command line rendering of blender, at least for the general use of Blender.\nThere are several ways to implement it.",
+            "title": "Batch rendering"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#directly-from-the-command-line",
+            "text": "",
+            "title": "Directly from the command line"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#windows-dos",
+            "text": "In the Windows command prompt you can combine commands by ' '.\n   See this example:  blender -b example\\example1.blend  -s 20 -e 100 -a   blender -b example\\example2.blend  -s 20 -e 100 -a  If you are rendering overnight or over the weekend, it is rekommendable to include a command to shutdown the PC automatically.\n   The command would then look like this:      blender -b example\\example1.blend  -s 20 -e 100 -a   blender -b example\\example2.blend  -s 20 -e 100 -a   shutdown /s /t 0",
+            "title": "Windows (DOS)"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#unix-shell",
+            "text": "The Blender commands are identical on Unix (Linux,MAC OS X, etc) and Windows systems. However, there some pecularities for each OS, e.g. Windows uses the \\ character as the path separator and UNIX the / character.\n   The only important difference is the shutdown command. The syntax is different and you need superuser rights to execute that command.\n   In short it looks like this:      blender -b example/example1.blend  -s 20 -e 100 -a   blender -b example/example2.blend  -s 20 -e 100 -a   sudo shutdown -h now",
+            "title": "Unix (shell)"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#batch-file-or-shell-script",
+            "text": "",
+            "title": "Batch file or shell script"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#windows-dos_1",
+            "text": "Simply create a new file in you favorite text editor and copy and paste each command line seperately in a new line. \nSomthing like this:  blender -b example\\example1.blend  -s 20 -e 100 -a \nblender -b example\\example2.blend  -s 20 -e 100 -a\nshutdown /s /t 0  Note: Omit ' '.  Then save the file and name the file extention .bat, and execute file.",
+            "title": "Windows (DOS)"
+        },
+        {
+            "location": "/blender/2015-03-20_blender01/#unix-bash",
+            "text": "Bearing in mind the small differences between UNIX and DOS it is practically the same.\nHere an example.  #!/bin/bash\nblender -b example/example1.blend  -s 20 -e 100 -a \nblender -b example/example2.blend  -s 20 -e 100 -a\nshutdown -h now  Note: Omit ' '.  Then save the file and name the file extention .sh, and execute file.  Note: In order to make the shutdown work, you have to execute the script with super user rights.",
+            "title": "Unix (bash)"
+        },
+        {
+            "location": "/blender/2015-03-25_Blender_Freestyle_Tech_Illustr/",
+            "text": "Basic settings to render 2D technical illustrations with Freestyle renderer\n\n\nWith Blender Render\n\n\n\n\n\n\nSelect 'Blender Render'\n\n\n\n\n\n\n\n\nRender tab -\n Select 'Freestyle'\n\n\n\n\n\n\nSet 'Line thickness'\n\n\n\n\n\n\n\n\nRender Layers tab -\n De-select all 'Passes', then only the lines (strokes) are rendered.\n\n\n\n\n\n\n\n\nFreestyle Line Style -\n Select 'Geometry'\n\n\n\n\n\n\n\n\nWith Cycles Renderer\n\n\n\n\n\n\nSelect 'Cycles'\n\n\n\n\n\n\n\n\nRender tab -\n Select 'Freestyle'\n\n\n\n\n\n\nSet 'Line thickness'\n\n\n\n\n\n\n\n\nFreestyle Line Style -\n Select 'Geometry'\n\n\n\n\n\n\nRender Layers tab -\n De-select 'Use Surfaces'\n\n\n\n\n\n\nRender Layers tab -\n De-select all 'Passes', then only the lines (strokes) are rendered.",
+            "title": "2D technical illustrations with Freestyle"
+        },
+        {
+            "location": "/blender/2015-03-25_Blender_Freestyle_Tech_Illustr/#basic-settings-to-render-2d-technical-illustrations-with-freestyle-renderer",
+            "text": "",
+            "title": "Basic settings to render 2D technical illustrations with Freestyle renderer"
+        },
+        {
+            "location": "/blender/2015-03-25_Blender_Freestyle_Tech_Illustr/#with-blender-render",
+            "text": "Select 'Blender Render'     Render tab -  Select 'Freestyle'    Set 'Line thickness'     Render Layers tab -  De-select all 'Passes', then only the lines (strokes) are rendered.     Freestyle Line Style -  Select 'Geometry'",
+            "title": "With Blender Render"
+        },
+        {
+            "location": "/blender/2015-03-25_Blender_Freestyle_Tech_Illustr/#with-cycles-renderer",
+            "text": "Select 'Cycles'     Render tab -  Select 'Freestyle'    Set 'Line thickness'     Freestyle Line Style -  Select 'Geometry'    Render Layers tab -  De-select 'Use Surfaces'    Render Layers tab -  De-select all 'Passes', then only the lines (strokes) are rendered.",
+            "title": "With Cycles Renderer"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Automatic_Startup/",
+            "text": "Compute Stick: Automatic start-up installation (Windows 8/10)\n\n\nAutomatic Login\n\n\n\n\nPress Win-R, 'Run' dialog opens.\n\n\nType 'netplwiz', hit Enter, 'User Accounts' opens.\n\n\nSelect 'Application' user account.\n\n\nUncheck 'Users must enter a user name and password to use this computer' check box.\n\n\nClick 'Apply'.\n\n\nIn 'Automatically sign in' type the password twice.\n\n\nClick 'OK'.\n\n\n\n\nMake power button shut down Windows\n\n\n\n\nOpen the 'Control panel'.\n\n\nInput 'power' in the search box.\n\n\nClick 'Change what the power buttons do'.\n\n\nSelect 'Shut down'.\n\n\nClick 'Save changes'.\n\n\n\n\nBoot directly to desktop (Windows 8 only)\n\n\n\n\nGo to the Desktop.\n\n\nRight-cklick in the taskbar.\n\n\nClick 'Properties'.\n\n\nClick 'Navigation' tap.\n\n\nSelect 'When I sign in or close all apps on a screen, go to the desktop instead of Start'\n\n\nClick 'OK'.\n\n\n\n\nBatch file\n\n\n\n\nPress Win-R, 'Run' dialog opens.\n\n\nInput 'shell:startup' , Startup folder opens.\n\n\n\n\nCreate a Batch (.bat) file in the Startup folder that includes the following command:\n\n\n\"C:\\Program Files (x86)\\Microsoft Office\\Office15\\POWERPNT.EXE\" /s \"C:\\Users\\application\\Desktop\\[PRESENTATION FILENAME]\"\n\n\n\n\n\n\n\nName the batch file 'start.bat', save and close.\n\n\n\n\n\n\nPowerpoint\n\n\n\n\nCopy the PPTX file to the Desktop folder.\n\n\nThe file name has to be the same as in the 'start.bat' file.",
+            "title": "Compute Stick: Automatic start-up installation"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Automatic_Startup/#compute-stick-automatic-start-up-installation-windows-810",
+            "text": "",
+            "title": "Compute Stick: Automatic start-up installation (Windows 8/10)"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Automatic_Startup/#automatic-login",
+            "text": "Press Win-R, 'Run' dialog opens.  Type 'netplwiz', hit Enter, 'User Accounts' opens.  Select 'Application' user account.  Uncheck 'Users must enter a user name and password to use this computer' check box.  Click 'Apply'.  In 'Automatically sign in' type the password twice.  Click 'OK'.",
+            "title": "Automatic Login"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Automatic_Startup/#make-power-button-shut-down-windows",
+            "text": "Open the 'Control panel'.  Input 'power' in the search box.  Click 'Change what the power buttons do'.  Select 'Shut down'.  Click 'Save changes'.",
+            "title": "Make power button shut down Windows"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Automatic_Startup/#boot-directly-to-desktop-windows-8-only",
+            "text": "Go to the Desktop.  Right-cklick in the taskbar.  Click 'Properties'.  Click 'Navigation' tap.  Select 'When I sign in or close all apps on a screen, go to the desktop instead of Start'  Click 'OK'.",
+            "title": "Boot directly to desktop (Windows 8 only)"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Automatic_Startup/#batch-file",
+            "text": "Press Win-R, 'Run' dialog opens.  Input 'shell:startup' , Startup folder opens.   Create a Batch (.bat) file in the Startup folder that includes the following command:  \"C:\\Program Files (x86)\\Microsoft Office\\Office15\\POWERPNT.EXE\" /s \"C:\\Users\\application\\Desktop\\[PRESENTATION FILENAME]\"    Name the batch file 'start.bat', save and close.",
+            "title": "Batch file"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Automatic_Startup/#powerpoint",
+            "text": "Copy the PPTX file to the Desktop folder.  The file name has to be the same as in the 'start.bat' file.",
+            "title": "Powerpoint"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Installation_guide/",
+            "text": "Mini-PC installation guide\n\n\nRequired items\n\n\n\n\nMini-PC\n\n\nUSB AC adapter\n\n\nUSB cable\n\n\nHDMI cable\n\n\nDuct tape \n\n\n\n\n\n\nCompleted installation\n\n\n!(img/image3.jpeg)\n\n\nInstallation",
+            "title": "Mini-PC installation"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Installation_guide/#mini-pc-installation-guide",
+            "text": "",
+            "title": "Mini-PC installation guide"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Installation_guide/#required-items",
+            "text": "Mini-PC  USB AC adapter  USB cable  HDMI cable  Duct tape",
+            "title": "Required items"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Installation_guide/#completed-installation",
+            "text": "!(img/image3.jpeg)",
+            "title": "Completed installation"
+        },
+        {
+            "location": "/E-panel/2016-11-18_E-panel_Installation_guide/#installation",
+            "text": "",
+            "title": "Installation"
+        },
+        {
+            "location": "/ME10/2015-05-08_Select_elements_on_layer/",
+            "text": "Select elemets on layers in ME10/Creo Elements/Direct drafting\n\n\nIf it is required to select elements (TEXTS,DIMENSIONS, etc...) on a specific layer in ME10,\nit is possible to use the macro script language to select those elements.\n\n\nExamples\n\n\n\n\n\n\nSelect all texts.\n\n\nSELECT GLOBAL TEXTS NAMESPACE_INFOS 'SYS:LAYER_SCOPE' 'LAYER: [Layer name]' CONFIRM\n\n\n\n\n\n\nSelect all dimensions.\n\n\nSELECT GLOBAL DIMENSIONS NAMESPACE_INFOS 'SYS:LAYER_SCOPE' 'LAYER: [Layer name]' CONFIRM\n\n\n\n\n\n\nSelect all leader lines.\n\n\nSELECT GLOBAL LEADER_LINES NAMESPACE_INFOS 'SYS:LAYER_SCOPE' 'LAYER: [Layer name]' CONFIRM",
+            "title": "Select elemets on layers"
+        },
+        {
+            "location": "/ME10/2015-05-08_Select_elements_on_layer/#select-elemets-on-layers-in-me10creo-elementsdirect-drafting",
+            "text": "If it is required to select elements (TEXTS,DIMENSIONS, etc...) on a specific layer in ME10,\nit is possible to use the macro script language to select those elements.",
+            "title": "Select elemets on layers in ME10/Creo Elements/Direct drafting"
+        },
+        {
+            "location": "/ME10/2015-05-08_Select_elements_on_layer/#examples",
+            "text": "Select all texts.  SELECT GLOBAL TEXTS NAMESPACE_INFOS 'SYS:LAYER_SCOPE' 'LAYER: [Layer name]' CONFIRM    Select all dimensions.  SELECT GLOBAL DIMENSIONS NAMESPACE_INFOS 'SYS:LAYER_SCOPE' 'LAYER: [Layer name]' CONFIRM    Select all leader lines.  SELECT GLOBAL LEADER_LINES NAMESPACE_INFOS 'SYS:LAYER_SCOPE' 'LAYER: [Layer name]' CONFIRM",
+            "title": "Examples"
+        },
+        {
+            "location": "/office/2015-03-20_Del_word/",
+            "text": "Delete all tab stops in Word\n\n\n\n\nPress \nCtrl + H\n -\n Open Find/Replace window\n\n\ninput \n^t\n in Find\n\n\nLeave the Replace field empty\n\n\nClick 'Replace All'",
+            "title": "Delete all tap stops in Word"
+        },
+        {
+            "location": "/office/2015-03-20_Del_word/#delete-all-tab-stops-in-word",
+            "text": "Press  Ctrl + H  -  Open Find/Replace window  input  ^t  in Find  Leave the Replace field empty  Click 'Replace All'",
+            "title": "Delete all tab stops in Word"
+        },
+        {
+            "location": "/office/2015-03-21_Word_Table_header/",
+            "text": "Word 2013: Table header do not repeat on each page\n\n\nProblem description\n\n\nThe header row does not repeat on following pages, although 'Repeat Header Rows' is activated.\n\n\nSolution\n\n\n\n\nOpen 'Table properties'\n\n\nSelect 'Text wrapping' -\n None",
+            "title": "Table header do not repeat on each page"
+        },
+        {
+            "location": "/office/2015-03-21_Word_Table_header/#word-2013-table-header-do-not-repeat-on-each-page",
+            "text": "",
+            "title": "Word 2013: Table header do not repeat on each page"
+        },
+        {
+            "location": "/office/2015-03-21_Word_Table_header/#problem-description",
+            "text": "The header row does not repeat on following pages, although 'Repeat Header Rows' is activated.",
+            "title": "Problem description"
+        },
+        {
+            "location": "/office/2015-03-21_Word_Table_header/#solution",
+            "text": "Open 'Table properties'  Select 'Text wrapping' -  None",
+            "title": "Solution"
+        },
+        {
+            "location": "/PDF/2015-03-20_PDF01/",
+            "text": "Copy bookmarks to another PDF file\n\n\nWarning: Still under construction\n\n\nAdobe Acrobat does not offer the possibility to copy bookmarks from one PDF file to another.\nOne way to achieve this is to use the free command line tool \nPDFtk Server\n.\n\n\nThe procedure is as follows:\n\n\n\n\nExport the metadata (including the bookmarks) from the 'old' file to a text file\n\n\nImort the meta data into the the 'new' PDF\n\n\n\n\nExport\n\n\n\"C:\\Program Files (x86)\\PDF Labs\\PDFtk Server\\bin\\pdftk.exe\" Old_PDF_file.pdf dump_data output report.txt\n\n\n\nImport\n\n\n\"C:\\Program Files (x86)\\PDF Labs\\PDFtk Server\\bin\\pdftk.exe\" New_PDF_file.pdf update_info report.txt  output out.pdf",
+            "title": "Copy bookmarks to another PDF file"
+        },
+        {
+            "location": "/PDF/2015-03-20_PDF01/#copy-bookmarks-to-another-pdf-file",
+            "text": "Warning: Still under construction  Adobe Acrobat does not offer the possibility to copy bookmarks from one PDF file to another.\nOne way to achieve this is to use the free command line tool  PDFtk Server .  The procedure is as follows:   Export the metadata (including the bookmarks) from the 'old' file to a text file  Imort the meta data into the the 'new' PDF",
+            "title": "Copy bookmarks to another PDF file"
+        },
+        {
+            "location": "/PDF/2015-03-20_PDF01/#export",
+            "text": "\"C:\\Program Files (x86)\\PDF Labs\\PDFtk Server\\bin\\pdftk.exe\" Old_PDF_file.pdf dump_data output report.txt",
+            "title": "Export"
+        },
+        {
+            "location": "/PDF/2015-03-20_PDF01/#import",
+            "text": "\"C:\\Program Files (x86)\\PDF Labs\\PDFtk Server\\bin\\pdftk.exe\" New_PDF_file.pdf update_info report.txt  output out.pdf",
+            "title": "Import"
+        },
+        {
+            "location": "/PDF/2015-03-20_booklet_printing/",
+            "text": "Booklet printing\n\n\nPDF requirements\n\n\n\n\nOrientation: Portrait\n\n\nSize: A4\n\n\nPage number: Even\n\n\n\n\nPrinter driver setting\n\n\n\n\nLayout:  2-Sided / Left Bind\n    \n \n\n\nPaper: Acquire Tray and Paper Data\n    \n\n\nPaper: Note tray for cover paper (required later)\n    \n\n\nCover: Cover Print Mode -\n Cover Print 2 in 1\n    \n\n\nCover: Spine width -\n Calculation: PDF Page No. / 2 * 0.08 + approx. 1\n    \n\n\nCover: Cover 2-Sided\n    \n\n\nCover: Cover Tray -\n Selcet cover paper tray (noted under 'Paper')\n    \n\n\nWorkflow: Print Mode -\n Hold",
+            "title": "Booklet printing"
+        },
+        {
+            "location": "/PDF/2015-03-20_booklet_printing/#booklet-printing",
+            "text": "",
+            "title": "Booklet printing"
+        },
+        {
+            "location": "/PDF/2015-03-20_booklet_printing/#pdf-requirements",
+            "text": "Orientation: Portrait  Size: A4  Page number: Even",
+            "title": "PDF requirements"
+        },
+        {
+            "location": "/PDF/2015-03-20_booklet_printing/#printer-driver-setting",
+            "text": "Layout:  2-Sided / Left Bind\n        Paper: Acquire Tray and Paper Data\n      Paper: Note tray for cover paper (required later)\n      Cover: Cover Print Mode -  Cover Print 2 in 1\n      Cover: Spine width -  Calculation: PDF Page No. / 2 * 0.08 + approx. 1\n      Cover: Cover 2-Sided\n      Cover: Cover Tray -  Selcet cover paper tray (noted under 'Paper')\n      Workflow: Print Mode -  Hold",
+            "title": "Printer driver setting"
+        },
+        {
+            "location": "/video/2015-03-20_ffmpeg01/",
+            "text": "Merge H.264 videos with FFMPEG\n\n\nWarning: Still under construction\n\n\nIf it is required to merge two or more H.264 (MP4, MOV) video clips without re-encoding, it is very easy to use the \nFFMEG\n command line tool.\n\n\nThe procedure is quite easy:\n\n\n\n\nFFMPEG need to be installed\n\n\nCopy the video files in one directory\n\n\n\n\nCreate a text file (e.g. list.txt) that contains the file names of the H.264 files, see below.\n\n\nfile 'file1.mp4'\nfile 'file2.mp4'\nfile 'file3.mp4'\n\n\n\n\n\n\n\nThe execute following command:\n\n\nffmpeg -f concat -i list.txt -c copy output.mp4\n\n\n\n\n\n\n\nSee the full \ndocumentation\n of this command for reference.",
+            "title": "Merge videos with FFMPEG"
+        },
+        {
+            "location": "/video/2015-03-20_ffmpeg01/#merge-h264-videos-with-ffmpeg",
+            "text": "Warning: Still under construction  If it is required to merge two or more H.264 (MP4, MOV) video clips without re-encoding, it is very easy to use the  FFMEG  command line tool.  The procedure is quite easy:   FFMPEG need to be installed  Copy the video files in one directory   Create a text file (e.g. list.txt) that contains the file names of the H.264 files, see below.  file 'file1.mp4'\nfile 'file2.mp4'\nfile 'file3.mp4'    The execute following command:  ffmpeg -f concat -i list.txt -c copy output.mp4    See the full  documentation  of this command for reference.",
+            "title": "Merge H.264 videos with FFMPEG"
+        },
+        {
+            "location": "/general/2015-03-24_Tutorial_links/",
+            "text": "Tutorial link list\n\n\nBlender\n\n\n\n\nHow to Create a Saturn Infographic With Blender and Inkscape",
+            "title": "Tutorials link list"
+        },
+        {
+            "location": "/general/2015-03-24_Tutorial_links/#tutorial-link-list",
+            "text": "",
+            "title": "Tutorial link list"
+        },
+        {
+            "location": "/general/2015-03-24_Tutorial_links/#blender",
+            "text": "How to Create a Saturn Infographic With Blender and Inkscape",
+            "title": "Blender"
+        }
+    ]
+}

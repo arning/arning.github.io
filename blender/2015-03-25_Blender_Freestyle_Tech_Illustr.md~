@@ -1,0 +1,34 @@
+#Basic settings to render 2D technical illustrations with Freestyle renderer
+
+##With Blender Render
+
+1. Select 'Blender Render'  
+   ![Blender_Render](../img/09.png)
+
+2. Render tab -> Select 'Freestyle'
+
+3. Set 'Line thickness'  
+   ![Render_tab](../img/10.png)
+
+4. Render Layers tab -> De-select all 'Passes', then only the lines (strokes) are rendered.  
+   ![Render_Layers](../img/11.png)
+
+5. Freestyle Line Style -> Select 'Geometry'  
+   ![Render_Layers](../img/12.png)
+
+##With Cycles Renderer
+
+1. Select 'Cycles'  
+   ![Blender_Render](../img/13.png)
+
+2. Render tab -> Select 'Freestyle'
+
+3. Set 'Line thickness'  
+   ![Render_tab](../img/14.png)
+
+5. Freestyle Line Style -> Select 'Geometry'
+
+4. Render Layers tab -> De-select 'Use Surfaces'
+
+4. Render Layers tab -> De-select all 'Passes', then only the lines (strokes) are rendered.  
+   ![Render_Layers](../img/15.png)

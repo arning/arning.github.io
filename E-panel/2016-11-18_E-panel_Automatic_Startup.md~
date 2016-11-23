@@ -1,0 +1,43 @@
+#Compute Stick: Automatic start-up installation (Windows 8/10)
+
+##Automatic Login
+
+1. Press Win-R, 'Run' dialog opens.
+2. Type 'netplwiz', hit Enter, 'User Accounts' opens.
+3. Select 'Application' user account.
+4. Uncheck 'Users must enter a user name and password to use this computer' check box.
+5. Click 'Apply'.
+5. In 'Automatically sign in' type the password twice.
+6. Click 'OK'.
+
+##Make power button shut down Windows
+
+1. Open the 'Control panel'.
+2. Input 'power' in the search box.
+3. Click 'Change what the power buttons do'.
+4. Select 'Shut down'.
+4. Click 'Save changes'.
+
+##Boot directly to desktop (Windows 8 only)
+
+1. Go to the Desktop.
+2. Right-cklick in the taskbar.
+3. Click 'Properties'.
+4. Click 'Navigation' tap.
+5. Select 'When I sign in or close all apps on a screen, go to the desktop instead of Start'
+6. Click 'OK'.
+
+##Batch file
+
+1. Press Win-R, 'Run' dialog opens.
+2. Input 'shell:startup' , Startup folder opens.
+1. Create a Batch (.bat) file in the Startup folder that includes the following command: 
+```
+"C:\Program Files (x86)\Microsoft Office\Office15\POWERPNT.EXE" /s "C:\Users\application\Desktop\[PRESENTATION FILENAME]"
+```
+2. Name the batch file 'start.bat', save and close.
+ 
+##Powerpoint
+
+1. Copy the PPTX file to the Desktop folder.
+2. The file name has to be the same as in the 'start.bat' file.      
